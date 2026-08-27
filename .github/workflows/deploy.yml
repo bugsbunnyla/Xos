@@ -1,4 +1,4 @@
-name: Run Makefile
+name: Deploy Xos
 
 on:
   push:
@@ -13,4 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      - run: make deploy
+      - name: Run Makefile
+        run: make deploy
+        
