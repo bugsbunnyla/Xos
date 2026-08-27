@@ -1,0 +1,38 @@
+app:
+  name: "PhD Xpert Solver"
+  version: "1.0.0"
+  debug: false
+
+features:
+  osint: true
+  ai_chat: true
+  skill_agents: true
+  enterprise_billing: true
+  mfa: true
+  webauthn: true
+  saml: true
+
+search:
+  default_type: "hybrid"
+  max_results: 50
+  vector_enabled: true
+  graph_enabled: true
+
+ai:
+  default_model: "auto"
+  fallback_model: "ollama"
+  max_tokens: 4000
+  temperature: 0.3
+
+osint:
+  default_modules:
+    domain: ["whois", "dns", "subdomain"]
+    ip: ["shodan", "censys"]
+    email: ["breach", "social"]
+  risk_threshold_high: 70
+  risk_threshold_medium: 40
+
+rate_limits:
+  free: 100
+  pro: 1000
+  enterprise: 10000

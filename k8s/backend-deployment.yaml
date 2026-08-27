@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phdxpert-backend
+  labels:
+    app: phdxpert-backend
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: phdxpert-backend
+  template:
+    metadata:
+      labels:
+        app: phdxpert-backend
+    spec:
+      containers:
+      - name: backend
+        image: phdxpert/backend:latest
+        ports:
+        - containerPort: 8000
+        envFrom:
+        - secretRef:
+            name: phdxpert-secrets
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "500m"
+          limits:
+            memory: "2Gi"
+            cpu: "2000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phdxpert-backend
+spec:
+  selector:
+    app: phdxpert-backend
+  ports:
+  - port: 8000
+    targetPort: 8000
+  type: ClusterIP

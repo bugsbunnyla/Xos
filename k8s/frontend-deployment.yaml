@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: phdxpert-frontend
+  labels:
+    app: phdxpert-frontend
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: phdxpert-frontend
+  template:
+    metadata:
+      labels:
+        app: phdxpert-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: phdxpert/frontend:latest
+        ports:
+        - containerPort: 3000
+        env:
+        - name: NEXT_PUBLIC_API_URL
+          value: "https://api.phdxpert.io"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: phdxpert-frontend
+spec:
+  selector:
+    app: phdxpert-frontend
+  ports:
+  - port: 3000
+    targetPort: 3000
+  type: LoadBalancer
